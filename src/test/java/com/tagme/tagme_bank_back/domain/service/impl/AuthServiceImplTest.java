@@ -1,5 +1,7 @@
 package com.tagme.tagme_bank_back.domain.service.impl;
 
+import com.tagme.tagme_bank_back.domain.exception.InvalidCredentialsException;
+import com.tagme.tagme_bank_back.domain.exception.NotFoundException;
 import com.tagme.tagme_bank_back.domain.model.Client;
 import com.tagme.tagme_bank_back.domain.repository.AuthRepository;
 import com.tagme.tagme_bank_back.domain.repository.ClientRepository;
@@ -62,6 +64,68 @@ class AuthServiceImplTest {
                     () -> assertEquals("validToken", result.get(client))
             );
 
+        }
+
+        @DisplayName("Given invalid username, when authenticate is called, then should throw NotFoundException")
+        @Test
+        void givenInvalidUsername_whenAuthenticate_thenThrowNotFoundException() {
+            String username = "invalidUser";
+            String password = "anyPassword";
+
+            when(clientRepository.findByUsername(username)).thenReturn(Optional.empty());
+            assertThrows(NotFoundException.class, () -> {
+                authService.authenticate(username, password);
+            });
+        }
+
+        @DisplayName("Given valid username and invalid password, when authenticate is called, then should throw InvalidCredentialsException")
+        @Test
+        void givenValidUsernameAndInvalidPassword_whenAuthenticate_thenThrowInvalidCredentialsException() {
+            String username = "validUser";
+            String password = "invalidPassword";
+
+            Client clientHashed = Instancio.of(Client.class)
+                    .set(field(Client::getUsername), username)
+                    .set(field(Client::getPassword), Password4jUtil.hashPassword("correctPassword"))
+                    .create();
+
+            when(clientRepository.findByUsername(username)).thenReturn(Optional.of(clientHashed));
+            assertThrows(InvalidCredentialsException.class, () -> {
+                authService.authenticate(username, password);
+            });
+        }
+    }
+
+    @Nested
+    class LogoutTests {
+        @DisplayName("Given valid token, when logout is called, then should not throw any exception")
+        @Test
+        void givenValidToken_whenLogout_thenNoExceptionThrown() {
+            String token = "validToken";
+
+            assertDoesNotThrow(() -> {
+                authService.logout(token);
+            });
+        }
+
+        @DisplayName("Given null token, when logout is called, then should throw InvalidCredentialsException")
+        @Test
+        void givenNullToken_whenLogout_thenThrowInvalidCredentialsException() {
+            String token = null;
+
+            assertThrows(InvalidCredentialsException.class, () -> {
+                authService.logout(token);
+            });
+        }
+
+        @DisplayName("Given blank token, when logout is called, then should throw InvalidCredentialsException")
+        @Test
+        void givenBlankToken_whenLogout_thenThrowInvalidCredentialsException() {
+            String token = "   ";
+
+            assertThrows(InvalidCredentialsException.class, () -> {
+                authService.logout(token);
+            });
         }
     }
 }
