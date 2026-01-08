@@ -1,6 +1,8 @@
 package com.tagme.tagme_bank_back.persistence;
 
+import com.tagme.tagme_bank_back.persistence.dao.jpa.AuthJpaDao;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.ClientJpaDao;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.AuthJpaDaoImpl;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.ClientJpaDaoImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -14,5 +16,10 @@ public class TestConfig {
     @Bean
     ClientJpaDao clientJpaDao() {
         return new ClientJpaDaoImpl();
+    }
+
+    @Bean
+    AuthJpaDao authJpaDao() {
+        return new AuthJpaDaoImpl();
     }
 }

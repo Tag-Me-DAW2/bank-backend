@@ -2,6 +2,8 @@ package com.tagme.tagme_bank_back.persistence.dao.jpa.impl;
 
 import com.tagme.tagme_bank_back.domain.model.Client;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.ClientJpaDao;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.entity.ClientJpaEntity;
+import com.tagme.tagme_bank_back.persistence.mapper.ClientMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -22,11 +24,20 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
     }
 
     @Override
-    public Optional<Client> getByUsername(String username) {
+    public Optional<Client> findByUsername(String username) {
         String query = "SELECT c FROM ClientJpaEntity c WHERE c.username = :username";
-        Client client = entityManager.createQuery(query, Client.class)
-                .setParameter("username", username)
-                .getSingleResult();
-        return Optional.ofNullable(client);
+        try {
+            ClientJpaEntity clientJpaEntity = entityManager.createQuery(query, ClientJpaEntity.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+
+            Client client = ClientMapper.fromClientJpaEntityToClient(clientJpaEntity);
+
+            return Optional.ofNullable(client);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+
     }
 }

@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface ClientRepository {
     Optional<Boolean> existsByUsernameAndApiToken(String username, String apiKey);
-    Optional<Client> getByUsername(String username);
+    Optional<Client> findByUsername(String username);
 }

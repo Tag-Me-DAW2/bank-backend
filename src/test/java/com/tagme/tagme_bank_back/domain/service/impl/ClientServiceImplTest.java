@@ -1,8 +1,11 @@
 package com.tagme.tagme_bank_back.domain.service.impl;
 
 import com.tagme.tagme_bank_back.domain.exception.InvalidCredentialsException;
+import com.tagme.tagme_bank_back.domain.exception.NotFoundException;
+import com.tagme.tagme_bank_back.domain.model.Client;
 import com.tagme.tagme_bank_back.domain.repository.ClientRepository;
 import com.tagme.tagme_bank_back.domain.service.ClientService;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -63,4 +67,36 @@ class ClientServiceImplTest {
             });
         }
     }
+
+    @Nested
+    class getClientByUsernameTests {
+        @DisplayName("Given existing username, when getClientByUsername is called, then it should return the Client")
+        @Test
+        void givenExistingUsername_whenGetClientByUsername_thenReturnClient() {
+            String username = "existingUser";
+            var client = Instancio.of(Client.class).create();
+
+            when(clientRepository.findByUsername(anyString())).thenReturn(Optional.of(client));
+
+            Client result = clientService.getClientByUsername(username);
+
+            assertAll(
+                    () -> assertNotNull(result),
+                    () -> assertEquals(client, result)
+            );
+        }
+
+        @DisplayName("Given non-existing username, when getClientByUsername is called, then should throw NotFoundException")
+        @Test
+        void givenNonExistingUsername_whenGetClientByUsername_thenThrowException() {
+            String username = "nonExistingUser";
+
+            when(clientRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+            assertThrows(NotFoundException.class, () -> {
+                clientService.getClientByUsername(username);
+            });
+        }
+    }
+
+
 }
