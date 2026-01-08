@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.instancio.Select.field;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,6 +59,20 @@ class ClientControllerTest {
                                 .contentType("application/json")
                                 .content(requestBody))
                         .andExpect(status().isUnauthorized());
+            }
+
+            @DisplayName("Given missing username, when POST /clients is called, then it should return 400 BAD REQUEST")
+            @Test
+            void givenMissingUsername_whenPostClients_thenReturn400() throws Exception {
+                CredentialsRequest credentialsRequest = Instancio.of(CredentialsRequest.class)
+                        .set(field("username"), "")
+                        .create();
+
+                String requestBody = objectMapper.writeValueAsString(credentialsRequest);
+                mockMvc.perform(post("/clients")
+                                .contentType("application/json")
+                                .content(requestBody))
+                        .andExpect(status().isBadRequest());
             }
         }
     }

@@ -19,7 +19,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public Optional<Client> getByUsername(String username) {
-        return clientDao.getByUsername(username);
+    public Optional<Client> findByUsername(String username) {
+        return clientDao.findByUsername(username);
     }
 }

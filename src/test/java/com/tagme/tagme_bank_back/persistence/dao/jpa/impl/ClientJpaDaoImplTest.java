@@ -1,6 +1,7 @@
 package com.tagme.tagme_bank_back.persistence.dao.jpa.impl;
 
 import com.tagme.tagme_bank_back.annotation.DaoTest;
+import com.tagme.tagme_bank_back.domain.model.Client;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.ClientJpaDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -30,6 +31,26 @@ class ClientJpaDaoImplTest extends BaseJpaDaoTest<ClientJpaDao>{
             String apiKey = "invalidKey";
 
             assertFalse(dao.existsByUsernameAndApiToken(username, apiKey).orElse(false));
+        }
+    }
+
+    @Nested
+    class findByUsername {
+        @DisplayName("Given valid username, when findByUsername is called, then return client")
+        @Test
+        void givenValidUsername_whenFindByUsername_thenReturnClient() {
+            String username = "javier";
+
+            Client client = dao.findByUsername(username).orElse(null);
+            assertTrue(client.getUsername().equals(username));
+        }
+
+        @DisplayName("Given invalid username, when findByUsername is called, then not found Exception")
+        @Test
+        void givenInvalidUsername_whenFindByUsername_thenNotFoundException() {
+            String username = "sdf";
+            Client client = dao.findByUsername(username).orElse(null);
+            assertTrue(client == null);
         }
     }
 }

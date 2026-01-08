@@ -20,6 +20,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientByUsername(String username) {
-        return clientRepository.getByUsername(username).orElseThrow(() -> new NotFoundException("Client not found with username: " + username));
+        return clientRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Client not found with username: " + username));
     }
 }
