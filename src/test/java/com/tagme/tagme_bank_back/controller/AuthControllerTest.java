@@ -89,8 +89,7 @@ class AuthControllerTest {
         void logoutWithValidToken() throws Exception {
             String token = "valid-token";
 
-            doNothing().when(authServic
-                    e).logout(anyString());
+            doNothing().when(authService).logout(anyString());
 
             mockMvc.perform(post("/auth/logout")
                             .header("Authorization", "Bearer " + token))
