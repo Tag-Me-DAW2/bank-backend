@@ -14,7 +14,7 @@ public class CreditCard {
         this.number = number;
         this.expirationDate = expirationDate;
         this.cvv = cvv;
-        this.fullName = fullName;
+        setFullName(fullName);
     }
 
     public Long getId() {
@@ -54,7 +54,7 @@ public class CreditCard {
     }
 
     public void setFullName(String fullName) {
-        this.fullName = fullName;
+        this.fullName = fullName.toUpperCase();
     }
 
     @Override

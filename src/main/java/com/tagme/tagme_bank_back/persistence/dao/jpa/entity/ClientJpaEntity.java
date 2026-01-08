@@ -1,18 +1,34 @@
-package com.tagme.tagme_bank_back.domain.model;
+package com.tagme.tagme_bank_back.persistence.dao.jpa.entity;
 
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Client {
-    private Long id;
-    private String username;
-    private String password;
-    private String name;
-    private String lastName1;
-    private String lastName2;
-    private String dni;
-    private String apiKey;
+@Entity
+@Table(name = "tb_clients")
+public class ClientJpaEntity implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @Column(name = "username", nullable = false, unique = true)
+    String username;
+    @Column(name = "password", nullable = false)
+    String password;
+    @Column(name = "name", nullable = false)
+    String name;
+    @Column(name = "last_name1", nullable = false)
+    String lastName1;
+    @Column(name = "last_name2", nullable = false)
+    String lastName2;
+    @Column(name = "dni", nullable = false, unique = true)
+    String dni;
+    @Column(name = "api_key", nullable = true, unique = true)
+    String apiKey;
 
-    public Client(Long id, String username, String password, String name, String lastName1, String lastName2, String dni, String apiKey) {
+    public ClientJpaEntity(){}
+
+    public ClientJpaEntity(Long id, String username, String password, String name, String lastName1, String lastName2, String dni, String apiKey) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -83,34 +99,19 @@ public class Client {
         return apiKey;
     }
 
-    public void setApiKey(String api_key) {
-        this.apiKey = api_key;
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-
-        Client client = (Client) o;
-        return Objects.equals(id, client.id) && Objects.equals(username, client.username) && Objects.equals(password, client.password) && Objects.equals(name, client.name) && Objects.equals(lastName1, client.lastName1) && Objects.equals(lastName2, client.lastName2) && Objects.equals(dni, client.dni) && Objects.equals(apiKey, client.apiKey);
+        ClientJpaEntity that = (ClientJpaEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(name, that.name) && Objects.equals(lastName1, that.lastName1) && Objects.equals(lastName2, that.lastName2) && Objects.equals(dni, that.dni) && Objects.equals(apiKey, that.apiKey);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password, name, lastName1, lastName2, dni, apiKey);
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName1='" + lastName1 + '\'' +
-                ", lastName2='" + lastName2 + '\'' +
-                ", dni='" + dni + '\'' +
-                ", apiKey='" + apiKey + '\'' +
-                '}';
     }
 }
