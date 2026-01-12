@@ -37,7 +37,15 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
 
+    @Override
+    public Long count() {
+        return entityManager.createQuery("SELECT COUNT(c) FROM ClientJpaEntity c", Long.class).getSingleResult();
+    }
 
+    @Override
+    public Optional<ClientJpaEntity> findById(Long id) {
+        return Optional.ofNullable(entityManager.find(ClientJpaEntity.class, id));
     }
 }

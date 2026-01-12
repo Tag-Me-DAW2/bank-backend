@@ -5,3 +5,4 @@ VALUES
 INSERT INTO tb_sessions (client_id, token)
 VALUES
     (1, 'gurt');
+
