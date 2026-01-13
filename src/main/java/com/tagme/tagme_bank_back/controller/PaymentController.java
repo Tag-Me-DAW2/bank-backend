@@ -32,6 +32,8 @@ public class PaymentController {
 
         BigDecimal newBalance = paymentService.processCreditCardPayment(paymentDto);
 
+        PaymentResponse paymentResponse = new PaymentResponse("success","El pago se ha realizado correctamente", newBalance);
+
         return new ResponseEntity<>(paymentResponse, HttpStatus.OK);
     }
 

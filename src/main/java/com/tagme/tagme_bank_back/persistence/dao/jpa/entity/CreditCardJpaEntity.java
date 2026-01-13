@@ -3,6 +3,7 @@ package com.tagme.tagme_bank_back.persistence.dao.jpa.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class CreditCardJpaEntity implements Serializable {
     private BankAccountJpaEntity bankAccount;
 
     @OneToMany(mappedBy = "originCreditCard", fetch = FetchType.LAZY)
-    private List<MovementJpaEntity> movements;
+    private List<MovementJpaEntity> movements = new ArrayList<>();
 
     @Column(name = "number", nullable = false, unique = true)
     private String number;

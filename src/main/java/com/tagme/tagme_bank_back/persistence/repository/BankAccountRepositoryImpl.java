@@ -45,4 +45,17 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     public BigDecimal getBalanceByIban(String iban) {
         return bankAccountJpaDao.getBalanceByIban(iban);
     }
+
+    @Override
+    public BankAccount save(BankAccount bankAccount) {
+        if (bankAccount.getId() == null) {
+            return BankAccountMapper.fromBankAccountJpaEntityToBankAccount(
+                    bankAccountJpaDao.insert(BankAccountMapper.fromBankAccountToBankAccountJpaEntity(bankAccount))
+            );
+        } else {
+            return BankAccountMapper.fromBankAccountJpaEntityToBankAccount(
+                    bankAccountJpaDao.update(BankAccountMapper.fromBankAccountToBankAccountJpaEntity(bankAccount))
+            );
+        }
+    }
 }

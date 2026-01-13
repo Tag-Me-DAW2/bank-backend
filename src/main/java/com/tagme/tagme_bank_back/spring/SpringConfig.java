@@ -88,4 +88,11 @@ public class SpringConfig {
         return new BankAccountServiceImpl(bankAccountRepository);
     }
 
+    // Payment Beans
+    @Bean
+    PaymentService paymentService(ClientRepository clientRepository, BankAccountRepository bankAccountRepository,
+                                  CreditCardRepository creditCardRepository, MovementRepository movementRepository) {
+        return new PaymentServiceImpl(clientRepository, bankAccountRepository, creditCardRepository, movementRepository);
+    }
+
 }

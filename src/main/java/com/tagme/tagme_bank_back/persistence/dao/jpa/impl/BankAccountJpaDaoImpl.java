@@ -77,6 +77,11 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
         return Optional.ofNullable(entityManager.find(BankAccountJpaEntity.class, id));
     }
 
+    @Override
+    public BankAccountJpaEntity insert(BankAccountJpaEntity bankAccountJpaEntity) {
+        entityManager.persist(bankAccountJpaEntity);
+        return bankAccountJpaEntity;
+    }
 
     @Override
     public BankAccountJpaEntity update(BankAccountJpaEntity entity) {

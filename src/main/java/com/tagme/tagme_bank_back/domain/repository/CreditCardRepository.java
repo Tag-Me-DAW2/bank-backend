@@ -8,4 +8,5 @@ public interface CreditCardRepository {
     Optional<CreditCard> findById(Long id);
     Boolean validateCreditCard(CreditCard creditCard);
     String getIbanByCreditCard(CreditCard creditCard);
+    Optional<Long> getIdByCreditCardNumber(String cardNumber);
 }

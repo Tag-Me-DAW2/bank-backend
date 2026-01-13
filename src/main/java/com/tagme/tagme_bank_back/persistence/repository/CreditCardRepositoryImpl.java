@@ -32,4 +32,9 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
         CreditCardJpaEntity creditCardEntity = CreditCardMapper.fromCreditCardToCreditCardJpaEntity(creditCard);
         return creditCardDao.getIbanByCreditCard(creditCardEntity);
     }
+
+    @Override
+    public Optional<Long> getIdByCreditCardNumber(String cardNumber) {
+        return creditCardDao.getIdByCreditCardNumber(cardNumber);
+    }
 }

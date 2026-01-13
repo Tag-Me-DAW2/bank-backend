@@ -85,4 +85,16 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
                 .setParameter("cvv", creditCard.getCvv())
                 .getSingleResult();
     }
+
+    @Override
+    public Optional<Long> getIdByCreditCardNumber(String cardNumber) {
+        String sql = "SELECT c.id FROM CreditCardJpaEntity c " +
+                "WHERE c.number = :number ";
+
+        Long result = entityManager.createQuery(sql, Long.class)
+                .setParameter("number", cardNumber)
+                .getSingleResult();
+
+        return Optional.ofNullable(result);
+    }
 }

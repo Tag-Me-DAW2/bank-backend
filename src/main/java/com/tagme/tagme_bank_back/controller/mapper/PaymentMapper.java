@@ -16,6 +16,4 @@ public class PaymentMapper {
                 PayMapper.toDto(request.payRequest())
         );
     }
-
-    public static
 }

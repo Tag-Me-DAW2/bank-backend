@@ -1,5 +1,6 @@
 package com.tagme.tagme_bank_back.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.math.BigDecimal;
@@ -17,8 +18,8 @@ public class BankAccount {
         this.iban = iban;
         this.balance = balance;
         this.client = client;
-        this.creditCards = creditCards;
-        this.movements = movements;
+        this.creditCards = new ArrayList<>(creditCards);
+        this.movements = new ArrayList<>(movements);
     }
 
     public Long getId() {
