@@ -48,4 +48,34 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
     public Optional<ClientJpaEntity> findById(Long id) {
         return Optional.ofNullable(entityManager.find(ClientJpaEntity.class, id));
     }
+
+    @Override
+    public ClientJpaEntity insert(ClientJpaEntity entity) {
+        entityManager.persist(entity);
+        return entity;
+    }
+
+    @Override
+    public ClientJpaEntity update(ClientJpaEntity entity) {
+        ClientJpaEntity managed = entityManager.find(ClientJpaEntity.class, entity.getId());
+        if (managed == null) {
+            throw new IllegalArgumentException("Client with id " + entity.getId() + " does not exist.");
+        }
+
+        managed.setUsername(entity.getUsername());
+        managed.setName(entity.getName());
+        managed.setLastName1(entity.getLastName1());
+        managed.setLastName2(entity.getLastName2());
+        managed.setApiKey(entity.getApiKey());
+
+        return entityManager.merge(managed);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        ClientJpaEntity entity = entityManager.find(ClientJpaEntity.class, id);
+        if (entity != null) {
+            entityManager.remove(entity);
+        }
+    }
 }

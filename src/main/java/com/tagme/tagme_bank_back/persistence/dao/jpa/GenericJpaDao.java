@@ -5,4 +5,6 @@ import java.util.Optional;
 public interface GenericJpaDao<T> {
     Long count();
     Optional<T> findById(Long id);
+    T update(T entity);
+    void deleteById(Long id);
 }

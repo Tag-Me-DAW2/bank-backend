@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ClientJpaDao extends GenericJpaDao<ClientJpaEntity> {
     Optional<Boolean> existsByUsernameAndApiToken(String username, String apiKey);
     Optional<Client> findByUsername(String username);
+    ClientJpaEntity insert(ClientJpaEntity clientJpaEntity);
 }

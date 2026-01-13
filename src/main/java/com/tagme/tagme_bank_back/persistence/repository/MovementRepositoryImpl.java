@@ -1,0 +1,47 @@
+package com.tagme.tagme_bank_back.persistence.repository;
+
+import com.tagme.tagme_bank_back.domain.model.Movement;
+import com.tagme.tagme_bank_back.domain.model.Page;
+import com.tagme.tagme_bank_back.domain.repository.MovementRepository;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.MovementJpaDao;
+import com.tagme.tagme_bank_back.persistence.mapper.MovementMapper;
+
+import java.util.List;
+import java.util.Optional;
+
+public class MovementRepositoryImpl implements MovementRepository {
+    private final MovementJpaDao movementJpaDao;
+
+
+    public MovementRepositoryImpl(MovementJpaDao movementJpaDao) {
+        this.movementJpaDao = movementJpaDao;
+    }
+
+    @Override
+    public Page<Movement> findAll(int page, int size) {
+        List<Movement> content = movementJpaDao.findAll(page, size).stream()
+                .map(MovementMapper::fromMovementJpaEntityToMovement)
+                .toList();
+
+        long totalElements = movementJpaDao.count();
+        return new Page<>(content, page, size, totalElements);
+    }
+
+    @Override
+    public Optional<Movement> findById(Long id) {
+        return movementJpaDao.findById(id).map(MovementMapper::fromMovementJpaEntityToMovement);
+    }
+
+    @Override
+    public Movement save(Movement movement, Long accountId) {
+        if (movement.getId() == null) {
+            return MovementMapper.fromMovementJpaEntityToMovement(
+                    movementJpaDao.insert(MovementMapper.fromMovementToMovementJpaEntity(movement), accountId)
+            );
+        } else {
+            return MovementMapper.fromMovementJpaEntityToMovement(
+                    movementJpaDao.update(MovementMapper.fromMovementToMovementJpaEntity(movement))
+            );
+        }
+    }
+}

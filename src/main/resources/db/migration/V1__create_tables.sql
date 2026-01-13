@@ -23,17 +23,52 @@ CREATE TABLE `tb_sessions` (
                                    ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
+
+CREATE TABLE `tb_bank_accounts` (
+                                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                                    `client_id` int(11) NOT NULL,
+                                    `iban` varchar(34) NOT NULL,
+                                    `balance` double NOT NULL DEFAULT '0',
+                                    `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                    PRIMARY KEY (`id`),
+                                    KEY `tb_clients_FK` (`client_id`),
+                                    CONSTRAINT `tb_clients_FK` FOREIGN KEY (`client_id`) REFERENCES `tb_clients` (`id`)
+                                        ON DELETE CASCADE
+                                        ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
 CREATE TABLE  `tb_credit_cards` (
                                 `id` int(11) NOT NULL AUTO_INCREMENT,
-                               `bank_account_id` int(11) NOT NULL,
+                               `account_id` int(11) NOT NULL,
                                `number` varchar(16) NOT NULL,
                                `expiration_date` varchar(7) NOT NULL,
                                `cvv` varchar(4) NOT NULL,
                                `full_name` varchar(100) NOT NULL,
                                `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                PRIMARY KEY (`id`),
-                               KEY `tb_bank_accounts_FK` (`bank_account_id`),
-                               CONSTRAINT `tb_bank_accounts_FK` FOREIGN KEY (`bank_account_id`) REFERENCES `tb_bank_accounts` (`id`)
+                               KEY `tb_bank_accounts_FK` (`account_id`),
+                               CONSTRAINT `tb_bank_accounts_FK` FOREIGN KEY (`account_id`) REFERENCES `tb_bank_accounts` (`id`)
                                    ON DELETE CASCADE
                                    ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+CREATE TABLE  `tb_movements` (
+                                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                                    `account_id` int(11) NOT NULL,
+                                    `type` ENUM('DEPOSIT','WITHDRAWAL') NOT NULL,
+                                    `origin` ENUM('TRANSFER','CARD','DOMICILATION') NOT NULL,
+                                    `origin_credit_card_id` int(11) DEFAULT NULL,
+                                    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                    `amount` double NOT NULL,
+                                    `concept` varchar(255) DEFAULT NULL,
+                                    `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                    PRIMARY KEY (`id`),
+                                    KEY `tb_bank_accounts_FK` (`account_id`),
+                                    CONSTRAINT `tb_bank_accounts_FK` FOREIGN KEY (`account_id`) REFERENCES `tb_bank_accounts` (`id`)
+                                        ON DELETE CASCADE
+                                        ON UPDATE CASCADE,
+                                    KEY `tb_credit_cards_FK` (`origin_credit_card_id`),
+                                    CONSTRAINT `tb_credit_cards_FK` FOREIGN KEY (`origin_credit_card_id`) REFERENCES `tb_credit_cards` (`id`)
+                                        ON DELETE SET NULL
+                                        ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;

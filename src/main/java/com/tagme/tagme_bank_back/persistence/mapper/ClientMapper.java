@@ -20,4 +20,22 @@ public class ClientMapper {
                 clientJpaEntity.getApiKey()
         );
     }
+
+    public static ClientJpaEntity fromClientToClientJpaEntity(Client client) {
+        if (client == null) {
+            return null;
+        }
+
+        ClientJpaEntity clientJpaEntity = new ClientJpaEntity();
+        clientJpaEntity.setId(client.getId());
+        clientJpaEntity.setUsername(client.getUsername());
+        clientJpaEntity.setPassword(client.getPassword());
+        clientJpaEntity.setName(client.getName());
+        clientJpaEntity.setLastName1(client.getLastName1());
+        clientJpaEntity.setLastName2(client.getLastName2());
+        clientJpaEntity.setDni(client.getDni());
+        clientJpaEntity.setApiKey(client.getApiKey());
+
+        return clientJpaEntity;
+    }
 }
