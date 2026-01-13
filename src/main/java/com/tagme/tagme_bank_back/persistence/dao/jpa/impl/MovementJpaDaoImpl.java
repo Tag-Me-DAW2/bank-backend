@@ -29,6 +29,20 @@ public class MovementJpaDaoImpl implements MovementJpaDao {
     }
 
     @Override
+    public List<MovementJpaEntity> findAllByAccountId(Long bankAccountId, int page, int size) {
+        int pageIndex = Math.max(page - 1, 0);
+
+        String sql = "SELECT m FROM MovementJpaEntity m WHERE m.bankAccount.id = :bankAccountId ORDER BY m.id";
+        TypedQuery<MovementJpaEntity> query = entityManager
+                .createQuery(sql, MovementJpaEntity.class)
+                .setParameter("bankAccountId", bankAccountId)
+                .setFirstResult(pageIndex * size)
+                .setMaxResults(size);
+
+        return query.getResultList();
+    }
+
+    @Override
     public Long count() {
         String sql = "SELECT COUNT(m) FROM MovementJpaEntity m";
         TypedQuery<Long> query = entityManager.createQuery(sql, Long.class);

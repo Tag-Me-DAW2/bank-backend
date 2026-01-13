@@ -28,6 +28,16 @@ public class MovementRepositoryImpl implements MovementRepository {
     }
 
     @Override
+    public Page<Movement> findAllByAccountId(Long accountId, int page, int size) {
+        List<Movement> content = movementJpaDao.findAllByAccountId(accountId,page, size).stream()
+                .map(MovementMapper::fromMovementJpaEntityToMovement)
+                .toList();
+
+        long totalElements = movementJpaDao.count();
+        return new Page<>(content, page, size, totalElements);
+    }
+
+    @Override
     public Optional<Movement> findById(Long id) {
         return movementJpaDao.findById(id).map(MovementMapper::fromMovementJpaEntityToMovement);
     }

@@ -23,6 +23,19 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
+    public Page<Movement> getAllByAccountId(Long accountId, int page, int size) {
+        if (page < 1 || size < 1) {
+            throw new RuntimeException("Page and size must be greater than 0");
+        }
+
+        if (accountId == null) {
+            throw new RuntimeException("AccountId cannot be null");
+        }
+
+        return movementRepository.findAllByAccountId(accountId, page, size);
+    }
+
+    @Override
     public Movement getById(Long id) {
         if (id == null) {
             throw new RuntimeException("Id cannot be null");

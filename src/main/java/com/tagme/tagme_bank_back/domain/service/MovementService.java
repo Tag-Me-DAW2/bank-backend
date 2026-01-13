@@ -7,4 +7,5 @@ public interface MovementService {
     Page<Movement> getAll(int page, int size);
     Movement getById(Long id);
     Movement create(Movement movement, Long accountId);
+    Page<Movement> getAllByAccountId(Long accountId, int page, int size);
 }
