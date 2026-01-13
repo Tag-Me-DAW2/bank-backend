@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface MovementRepository {
     Page<Movement> findAll(int page, int size);
+    Page<Movement> findAllByAccountId(Long accountId, int page, int size);
     Optional<Movement> findById(Long id);
     Movement save(Movement movement, Long accountId);
 }

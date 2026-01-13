@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface MovementJpaDao extends GenericJpaDao<MovementJpaEntity> {
     List<MovementJpaEntity> findAll(int page, int size);
+    List<MovementJpaEntity> findAllByAccountId(Long bankAccountId, int page, int size);
     MovementJpaEntity insert(MovementJpaEntity movementJpaEntity, Long bankAccountId);
 }
