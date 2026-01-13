@@ -14,7 +14,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public Optional<Boolean> existsByUsernameAndApiToken(String username, String apiKey) {
+    public Boolean existsByUsernameAndApiToken(String username, String apiKey) {
         return clientDao.existsByUsernameAndApiToken(username, apiKey);
     }
 

@@ -26,4 +26,10 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
         CreditCardJpaEntity creditCardEntity = CreditCardMapper.fromCreditCardToCreditCardJpaEntity(creditCard);
         return creditCardDao.validateCreditCard(creditCardEntity);
     }
+
+    @Override
+    public String getIbanByCreditCard(CreditCard creditCard) {
+        CreditCardJpaEntity creditCardEntity = CreditCardMapper.fromCreditCardToCreditCardJpaEntity(creditCard);
+        return creditCardDao.getIbanByCreditCard(creditCardEntity);
+    }
 }

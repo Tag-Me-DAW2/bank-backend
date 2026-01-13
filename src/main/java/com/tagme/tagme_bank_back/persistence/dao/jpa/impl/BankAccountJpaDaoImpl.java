@@ -6,6 +6,7 @@ import com.tagme.tagme_bank_back.persistence.dao.jpa.entity.MovementJpaEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,5 +93,13 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
         if (entity != null) {
             entityManager.remove(entity);
         }
+    }
+
+    @Override
+    public BigDecimal getBalanceByIban(String iban) {
+        String query = "SELECT b.balance FROM BankAccountJpaEntity b WHERE b.iban = :iban";
+        return entityManager.createQuery(query, BigDecimal.class)
+                .setParameter("iban", iban)
+                .getSingleResult();
     }
 }

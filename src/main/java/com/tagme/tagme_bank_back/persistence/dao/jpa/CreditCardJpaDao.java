@@ -7,4 +7,5 @@ import com.tagme.tagme_bank_back.persistence.dao.jpa.entity.CreditCardJpaEntity;
 public interface CreditCardJpaDao extends GenericJpaDao<CreditCardJpaEntity> {
     Boolean validateCreditCard(CreditCardJpaEntity creditCard);
     CreditCardJpaEntity insert(CreditCardJpaEntity creditCard, Long bankAccountId);
+    String getIbanByCreditCard(CreditCardJpaEntity creditCard);
 }
