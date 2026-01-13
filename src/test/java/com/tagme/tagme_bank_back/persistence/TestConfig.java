@@ -1,9 +1,13 @@
 package com.tagme.tagme_bank_back.persistence;
 
 import com.tagme.tagme_bank_back.persistence.dao.jpa.AuthJpaDao;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.BankAccountJpaDao;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.ClientJpaDao;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.MovementJpaDao;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.AuthJpaDaoImpl;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.BankAccountJpaDaoImpl;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.ClientJpaDaoImpl;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.MovementJpaDaoImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +25,17 @@ public class TestConfig {
     @Bean
     AuthJpaDao authJpaDao() {
         return new AuthJpaDaoImpl();
+    }
+
+    @Bean
+    MovementJpaDao movementJpaDao() {
+        return new MovementJpaDaoImpl() {
+        };
+    }
+
+    @Bean
+    BankAccountJpaDao bankAccountJpaDao() {
+        return new BankAccountJpaDaoImpl() {
+        };
     }
 }
