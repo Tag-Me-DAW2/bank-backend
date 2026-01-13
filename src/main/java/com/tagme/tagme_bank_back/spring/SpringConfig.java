@@ -1,23 +1,11 @@
 package com.tagme.tagme_bank_back.spring;
 
-import com.tagme.tagme_bank_back.domain.repository.AuthRepository;
-import com.tagme.tagme_bank_back.domain.repository.ClientRepository;
-import com.tagme.tagme_bank_back.domain.repository.CreditCardRepository;
-import com.tagme.tagme_bank_back.domain.service.AuthService;
-import com.tagme.tagme_bank_back.domain.service.ClientService;
-import com.tagme.tagme_bank_back.domain.service.CreditCardService;
-import com.tagme.tagme_bank_back.domain.service.impl.AuthServiceImpl;
-import com.tagme.tagme_bank_back.domain.service.impl.ClientServiceImpl;
-import com.tagme.tagme_bank_back.domain.service.impl.CreditCardServiceImpl;
-import com.tagme.tagme_bank_back.persistence.dao.jpa.AuthJpaDao;
-import com.tagme.tagme_bank_back.persistence.dao.jpa.ClientJpaDao;
-import com.tagme.tagme_bank_back.persistence.dao.jpa.CreditCardJpaDao;
-import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.AuthJpaDaoImpl;
-import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.ClientJpaDaoImpl;
-import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.CreditCardJpaDaoImpl;
-import com.tagme.tagme_bank_back.persistence.repository.AuthRepositoryImpl;
-import com.tagme.tagme_bank_back.persistence.repository.ClientRepositoryImpl;
-import com.tagme.tagme_bank_back.persistence.repository.CreditCardRepositoryImpl;
+import com.tagme.tagme_bank_back.domain.repository.*;
+import com.tagme.tagme_bank_back.domain.service.*;
+import com.tagme.tagme_bank_back.domain.service.impl.*;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.*;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.*;
+import com.tagme.tagme_bank_back.persistence.repository.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -66,6 +54,38 @@ public class SpringConfig {
     @Bean
     CreditCardService creditCardService(CreditCardRepository creditCardRepository) {
         return new CreditCardServiceImpl(creditCardRepository);
+    }
+
+    // Movements Beans
+    @Bean
+    MovementJpaDao movementJpaDao() {
+        return new MovementJpaDaoImpl();
+    }
+
+    @Bean
+    MovementRepository movementRepository(MovementJpaDao movementJpaDao) {
+        return new MovementRepositoryImpl(movementJpaDao);
+    }
+
+    @Bean
+    MovementService movementService(MovementRepository movementRepository) {
+        return new MovementServiceImpl(movementRepository);
+    }
+
+    // BankAccount Beans
+    @Bean
+    BankAccountJpaDao bankAccountJpaDao() {
+        return new BankAccountJpaDaoImpl();
+    }
+
+    @Bean
+    BankAccountRepository bankAccountRepository(BankAccountJpaDao bankAccountJpaDao) {
+        return new BankAccountRepositoryImpl(bankAccountJpaDao);
+    }
+
+    @Bean
+    BankAccountService bankAccountService(BankAccountRepository bankAccountRepository) {
+        return new BankAccountServiceImpl(bankAccountRepository);
     }
 
 }

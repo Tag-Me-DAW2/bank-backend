@@ -1,6 +1,8 @@
 package com.tagme.tagme_bank_back.persistence.dao.jpa.impl;
 
+import com.tagme.tagme_bank_back.domain.exception.NotFoundException;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.CreditCardJpaDao;
+import com.tagme.tagme_bank_back.persistence.dao.jpa.entity.BankAccountJpaEntity;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.entity.CreditCardJpaEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,7 +19,7 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
                 "WHERE c.number = :number " +
                 "AND c.fullName = :fullName " +
                 "AND c.expirationDate = :expirationDate " +
-                "AND c.cvv = :cvv";
+                "AND c.cvv = :cvv ";
 
         Long count = entityManager.createQuery(sql, Long.class)
                 .setParameter("number", creditCard.getNumber())
@@ -38,5 +40,33 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
     @Override
     public Optional<CreditCardJpaEntity> findById(Long id) {
         return Optional.ofNullable(entityManager.find(CreditCardJpaEntity.class, id));
+    }
+
+    @Override
+    public CreditCardJpaEntity insert(CreditCardJpaEntity entity, Long bankAccountId) {
+        BankAccountJpaEntity bankAccount = entityManager.find(BankAccountJpaEntity.class, bankAccountId);
+        if (bankAccount == null) {
+            throw new NotFoundException("BankAccount with ID " + bankAccountId + " does not exist.");
+        }
+        entity.setBankAccount(bankAccount);
+        entityManager.persist(entity);
+        return entity;
+    }
+
+    @Override
+    public CreditCardJpaEntity update(CreditCardJpaEntity entity) {
+        if (entityManager.find(CreditCardJpaEntity.class, entity.getId()) == null) {
+            throw new NotFoundException("CreditCard with ID " + entity.getId() + " does not exist.");
+        } else {
+            return entityManager.merge(entity);
+        }
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        CreditCardJpaEntity entity = entityManager.find(CreditCardJpaEntity.class, id);
+        if (entity != null) {
+            entityManager.remove(entity);
+        }
     }
 }
