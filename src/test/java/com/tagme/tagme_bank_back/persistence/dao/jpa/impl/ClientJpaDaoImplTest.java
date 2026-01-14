@@ -21,7 +21,7 @@ class ClientJpaDaoImplTest extends BaseJpaDaoTest<ClientJpaDao>{
             String username = "javier";
             String apiKey = "gurt";
 
-            assertTrue(dao.existsByUsernameAndApiToken(username, apiKey).orElse(false));
+            assertTrue(dao.existsByUsernameAndApiToken(username, apiKey));
         }
 
         @DisplayName("Given invalid username and api token, when existsByUsernameAndApiToken is called, then return false")
@@ -30,7 +30,7 @@ class ClientJpaDaoImplTest extends BaseJpaDaoTest<ClientJpaDao>{
             String username = "invalidUser";
             String apiKey = "invalidKey";
 
-            assertFalse(dao.existsByUsernameAndApiToken(username, apiKey).orElse(false));
+            assertFalse(dao.existsByUsernameAndApiToken(username, apiKey));
         }
     }
 
