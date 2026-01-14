@@ -1,5 +1,7 @@
 package com.tagme.tagme_bank_back.domain.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.math.BigDecimal;
@@ -17,8 +19,8 @@ public class BankAccount {
         this.iban = iban;
         this.balance = balance;
         this.client = client;
-        this.creditCards = creditCards;
-        this.movements = movements;
+        this.creditCards = new ArrayList<>(creditCards);
+        this.movements = new ArrayList<>(movements);
     }
 
     public Long getId() {
@@ -68,6 +70,37 @@ public class BankAccount {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    public void withdrawByCard(BigDecimal amount, CreditCard card, String concept) {
+        Movement movement = new Movement(
+                null,
+                MovementType.WITHDRAWAL,
+                MovementOrigin.CARD,
+                card,
+                LocalDate.now(),
+                amount,
+                concept
+        );
+
+        this.movements.add(movement);
+        this.balance = this.balance.subtract(amount);
+    }
+
+    public void deposit(BigDecimal amount, MovementOrigin origin, String concept) {
+        Movement movement = new Movement(
+                null,
+                MovementType.DEPOSIT,
+                origin,
+                null,
+                LocalDate.now(),
+                amount,
+                concept
+        );
+
+        this.movements.add(movement);
+        this.balance = this.balance.add(amount);
+    }
+
 
     @Override
     public String toString() {

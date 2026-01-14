@@ -5,6 +5,7 @@ import com.tagme.tagme_bank_back.domain.repository.BankAccountRepository;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.BankAccountJpaDao;
 import com.tagme.tagme_bank_back.persistence.mapper.BankAccountMapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,5 +39,28 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
                 .stream()
                 .map(BankAccountMapper::fromBankAccountJpaEntityToBankAccount)
                 .toList();
+    }
+
+    @Override
+    public Optional<BigDecimal> findBalanceByIban(String iban) {
+        return bankAccountJpaDao.findBalanceByIban(iban);
+    }
+
+    @Override
+    public BankAccount save(BankAccount bankAccount) {
+        if (bankAccount.getId() == null) {
+            return BankAccountMapper.fromBankAccountJpaEntityToBankAccount(
+                    bankAccountJpaDao.insert(BankAccountMapper.fromBankAccountToBankAccountJpaEntity(bankAccount))
+            );
+        } else {
+            return BankAccountMapper.fromBankAccountJpaEntityToBankAccount(
+                    bankAccountJpaDao.update(BankAccountMapper.fromBankAccountToBankAccountJpaEntity(bankAccount))
+            );
+        }
+    }
+
+    @Override
+    public Optional<String> findIbanByCreditCardNumber(String creditCardNumber) {
+        return bankAccountJpaDao.findIbanByCreditCardNumber(creditCardNumber);
     }
 }

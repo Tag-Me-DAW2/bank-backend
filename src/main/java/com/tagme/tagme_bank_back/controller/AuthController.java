@@ -1,6 +1,7 @@
 package com.tagme.tagme_bank_back.controller;
 
 import com.tagme.tagme_bank_back.controller.mapper.ClientMapper;
+import com.tagme.tagme_bank_back.controller.webModel.request.CredentialsRequest;
 import com.tagme.tagme_bank_back.controller.webModel.request.LoginRequest;
 import com.tagme.tagme_bank_back.controller.webModel.response.ClientResponse;
 import com.tagme.tagme_bank_back.controller.webModel.response.LoginResponse;
@@ -41,5 +42,14 @@ public class AuthController {
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") String token) {
         authService.logout(token.substring(7));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/authorize")
+    public ResponseEntity<Void> checkClient(@RequestBody CredentialsRequest credentials) {
+        DtoValidator.validate(credentials);
+
+        authService.authorize(credentials.username(), credentials.apiKey());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -4,16 +4,16 @@ import com.tagme.tagme_bank_back.domain.model.CreditCard;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.entity.CreditCardJpaEntity;
 
 public class CreditCardMapper {
-    public static CreditCard fromCreditCardJpaEntityToCreditCard(CreditCardJpaEntity entity) {
-        if (entity == null) {
+    public static CreditCard fromCreditCardJpaEntityToCreditCard(CreditCardJpaEntity creditCard) {
+        if (creditCard == null) {
             return null;
         }
         return new CreditCard(
-                entity.getId(),
-                entity.getNumber(),
-                entity.getExpirationDate(),
-                entity.getCvv(),
-                entity.getFullName()
+                creditCard.getId(),
+                creditCard.getNumber(),
+                creditCard.getExpirationDate(),
+                creditCard.getCvv(),
+                creditCard.getFullName()
         );
     }
 
@@ -21,12 +21,13 @@ public class CreditCardMapper {
         if (creditCard == null) {
             return null;
         }
-        CreditCardJpaEntity entity = new CreditCardJpaEntity();
-        entity.setId(creditCard.getId());
-        entity.setNumber(creditCard.getNumber());
-        entity.setExpirationDate(creditCard.getExpirationDate());
-        entity.setCvv(creditCard.getCvv());
-        entity.setFullName(creditCard.getFullName());
-        return entity;
+
+        return new CreditCardJpaEntity(
+                creditCard.getId(),
+                creditCard.getNumber(),
+                creditCard.getExpirationDate(),
+                creditCard.getCvv(),
+                creditCard.getFullName()
+        );
     }
 }

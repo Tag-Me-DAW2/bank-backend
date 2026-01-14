@@ -44,7 +44,8 @@ public class MovementJpaEntity implements Serializable {
     public MovementJpaEntity() {
     }
 
-    public MovementJpaEntity(MovementType type, MovementOrigin origin, CreditCardJpaEntity originCreditCard, LocalDate date, BigDecimal amount, String concept) {
+    public MovementJpaEntity(Long id,MovementType type, MovementOrigin origin, CreditCardJpaEntity originCreditCard, LocalDate date, BigDecimal amount, String concept) {
+        this.id = id;
         this.type = type;
         this.origin = origin;
         this.originCreditCard = originCreditCard;

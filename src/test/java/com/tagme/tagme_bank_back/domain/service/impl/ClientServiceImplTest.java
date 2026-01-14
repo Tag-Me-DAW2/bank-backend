@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ClientServiceImplTest {
+    /*
     @Mock
     private ClientRepository clientRepository;
 
@@ -97,6 +98,5 @@ class ClientServiceImplTest {
             });
         }
     }
-
-
+*/
 }

@@ -25,14 +25,16 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> checkClient(@RequestBody CredentialsRequest credentials) {
-        DtoValidator.validate(credentials);
+    // Borrar, ahora pertenece a authcontroller
 
-        if(!clientService.checkCredentials(credentials.username(), credentials.apiKey())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping
+//    public ResponseEntity<Void> checkClient(@RequestBody CredentialsRequest credentials) {
+//        DtoValidator.validate(credentials);
+//
+//        if(!clientService.checkCredentials(credentials.username(), credentials.apiKey())) {
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

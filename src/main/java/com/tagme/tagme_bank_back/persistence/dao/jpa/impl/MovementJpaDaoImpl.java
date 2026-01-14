@@ -8,8 +8,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import org.testcontainers.shaded.org.checkerframework.checker.units.qual.s;
 
 public class MovementJpaDaoImpl implements MovementJpaDao {
     @PersistenceContext
@@ -80,5 +83,22 @@ public class MovementJpaDaoImpl implements MovementJpaDao {
         if (entity != null) {
             entityManager.remove(entity);
         }
+    }
+
+    @Override
+    public List<MovementJpaEntity> findMonthlyMovements(Long bankAccountId, LocalDate startOfTheMonth,
+            LocalDate startOfTheNextMonth, int page, int size) {
+        int pageIndex = Math.max(page - 1, 0);
+
+        String sql = "SELECT m FROM MovementJpaEntity m WHERE m.bankAccount.id = :bankAccountId AND m.date >= :startOfTheMonth AND m.date < :startOfTheNextMonth ORDER BY m.date DESC, m.id DESC";
+        TypedQuery<MovementJpaEntity> query = entityManager
+                .createQuery(sql, MovementJpaEntity.class)
+                .setParameter("bankAccountId", bankAccountId)
+                .setParameter("startOfTheMonth", startOfTheMonth)
+                .setParameter("startOfTheNextMonth", startOfTheNextMonth)
+                .setFirstResult(pageIndex * size)
+                .setMaxResults(size);
+
+        return query.getResultList();
     }
 }

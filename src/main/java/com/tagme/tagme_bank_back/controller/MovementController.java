@@ -7,10 +7,10 @@ import com.tagme.tagme_bank_back.domain.model.Movement;
 import com.tagme.tagme_bank_back.domain.model.Page;
 import com.tagme.tagme_bank_back.domain.service.MovementService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,7 +40,25 @@ public class MovementController {
                 .map(MovementMapper::fromMovementToMovementSummaryResponse)
                 .toList();
 
-        Page<MovementSummaryResponse> responsePage = new Page<>(movementSummaries, page, size, movementPage.totalElements(), movementPage.totalPages());
+        Page<MovementSummaryResponse> responsePage = new Page<>(movementSummaries, page, size,
+                movementPage.totalElements(), movementPage.totalPages());
+        return new ResponseEntity<>(responsePage, HttpStatus.OK);
+    }
+
+    @GetMapping("/monthly")
+    public ResponseEntity<Page<MovementSummaryResponse>> getMonthlyMovements(
+            @RequestParam(required = true) Long accountId,
+            @RequestParam(required = true) LocalDate date,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
+        Page<Movement> movementPage = movementService.getMonthlyMovements(accountId, date, page, size);
+        List<MovementSummaryResponse> movementSummaries = movementPage.data().stream()
+                .map(MovementMapper::fromMovementToMovementSummaryResponse)
+                .toList();
+
+        Page<MovementSummaryResponse> responsePage = new Page<>(movementSummaries, page, size,
+                movementPage.totalElements(), movementPage.totalPages());
         return new ResponseEntity<>(responsePage, HttpStatus.OK);
     }
 }
