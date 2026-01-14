@@ -46,6 +46,10 @@ public class CreditCardPaymentUseCaseImpl implements CreditCardPaymentUseCase {
         // Recoger Iban cliente
         String ibanClient = bankAccountService.getIbanByCreditCardNumber(creditCardNumber);
 
+        if(ibanClient.equals(ibanDestination)){
+            throw new IllegalArgumentException("The origin and destination accounts cannot be the same");
+        }
+
         // Recoger saldo del Cliente
         BigDecimal clientBalance = bankAccountService.getBalanceByIban(ibanClient);
         checkAvaliableBalance(clientBalance, paymentAmount);
