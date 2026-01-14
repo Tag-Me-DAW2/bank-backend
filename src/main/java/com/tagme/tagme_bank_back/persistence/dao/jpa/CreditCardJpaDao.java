@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface CreditCardJpaDao extends GenericJpaDao<CreditCardJpaEntity> {
     Boolean validateCreditCard(CreditCardJpaEntity creditCard);
     CreditCardJpaEntity insert(CreditCardJpaEntity creditCard, Long bankAccountId);
-    String getIbanByCreditCard(CreditCardJpaEntity creditCard);
     Optional<Long> getIdByCreditCardNumber(String cardNumber);
 }

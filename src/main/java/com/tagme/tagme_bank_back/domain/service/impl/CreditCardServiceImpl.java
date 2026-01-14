@@ -23,6 +23,15 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     @Override
     public Boolean validateCreditCard(CreditCard creditCard) {
-        return creditCardRepository.validateCreditCard(creditCard);
+        if(!creditCardRepository.validateCreditCard(creditCard)) {
+            throw new NotFoundException("Credit Card Not Found");
+        }
+        return true;
+    }
+
+    @Override
+    public Long getIdByCreditCardNumber(String cardNumber) {
+        return creditCardRepository.getIdByCreditCardNumber(cardNumber)
+                .orElseThrow(() -> new NotFoundException("Credit Card Not Found"));
     }
 }

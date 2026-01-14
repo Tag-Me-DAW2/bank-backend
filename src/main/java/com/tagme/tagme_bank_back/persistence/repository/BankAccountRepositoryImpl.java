@@ -42,8 +42,8 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     }
 
     @Override
-    public BigDecimal getBalanceByIban(String iban) {
-        return bankAccountJpaDao.getBalanceByIban(iban);
+    public Optional<BigDecimal> findBalanceByIban(String iban) {
+        return bankAccountJpaDao.findBalanceByIban(iban);
     }
 
     @Override
@@ -57,5 +57,10 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
                     bankAccountJpaDao.update(BankAccountMapper.fromBankAccountToBankAccountJpaEntity(bankAccount))
             );
         }
+    }
+
+    @Override
+    public Optional<String> findIbanByCreditCardNumber(String creditCardNumber) {
+        return bankAccountJpaDao.findIbanByCreditCardNumber(creditCardNumber);
     }
 }

@@ -10,6 +10,7 @@ public interface BankAccountJpaDao extends GenericJpaDao<BankAccountJpaEntity> {
     Optional<BankAccountJpaEntity> findByIban(String iban);
     Boolean existsByIbanAndClientUsername(String iban, String username);
     List<BankAccountJpaEntity> findByClientId(Long clientId);
-    BigDecimal getBalanceByIban(String iban);
+    Optional<BigDecimal> findBalanceByIban(String iban);
+    Optional<String> findIbanByCreditCardNumber(String creditCardNumber);
     BankAccountJpaEntity insert(BankAccountJpaEntity bankAccountJpaEntity);
 }

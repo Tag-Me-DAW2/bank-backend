@@ -85,11 +85,11 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
 
     @Override
     public BankAccountJpaEntity update(BankAccountJpaEntity entity) {
-        BankAccountJpaEntity managed = entityManager.find(BankAccountJpaEntity.class, entity.getId());
-        if (managed != null) {
-            managed.setBalance(entity.getBalance());
+        BankAccountJpaEntity managedEntity = entityManager.find(BankAccountJpaEntity.class, entity.getId());
+        if (managedEntity == null) {
+            throw new IllegalArgumentException("Bank account with ID " + entity.getId() + " does not exist.");
         }
-        return managed;
+        return entityManager.merge(entity);
     }
 
     @Override
@@ -101,10 +101,36 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
     }
 
     @Override
-    public BigDecimal getBalanceByIban(String iban) {
-        String query = "SELECT b.balance FROM BankAccountJpaEntity b WHERE b.iban = :iban";
-        return entityManager.createQuery(query, BigDecimal.class)
-                .setParameter("iban", iban)
-                .getSingleResult();
+    public Optional<BigDecimal> findBalanceByIban(String iban) {
+        try {
+            BigDecimal balance = entityManager.createQuery("""
+                SELECT b.balance
+                FROM BankAccountJpaEntity b
+                WHERE b.iban = :iban
+                """, BigDecimal.class)
+                    .setParameter("iban", iban)
+                    .getSingleResult();
+            return Optional.ofNullable(balance);
+        }
+        catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<String> findIbanByCreditCardNumber(String creditCardNumber) {
+        try {
+            String iban = entityManager.createQuery("""
+                SELECT b.iban
+                FROM BankAccountJpaEntity b
+                JOIN b.creditCards c
+                WHERE c.number = :creditCardNumber
+                """, String.class)
+                    .setParameter("creditCardNumber", creditCardNumber)
+                    .getSingleResult();
+            return Optional.ofNullable(iban);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

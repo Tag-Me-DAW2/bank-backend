@@ -10,6 +10,7 @@ public class MovementMapper {
         }
 
         return new MovementJpaEntity(
+                movement.getId(),
                 movement.getType(),
                 movement.getOrigin(),
                 CreditCardMapper.fromCreditCardToCreditCardJpaEntity(movement.getoCreditCard()),

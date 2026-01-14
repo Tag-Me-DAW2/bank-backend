@@ -14,11 +14,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Boolean checkCredentials(String username, String apiKey) {
-        return clientRepository.existsByUsernameAndApiToken(username, apiKey);
-    }
-
-    @Override
     public Client getClientByUsername(String username) {
         return clientRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Client not found with username: " + username));
     }

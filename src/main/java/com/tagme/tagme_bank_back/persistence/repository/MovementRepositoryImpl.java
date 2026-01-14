@@ -50,7 +50,7 @@ public class MovementRepositoryImpl implements MovementRepository {
             );
         } else {
             return MovementMapper.fromMovementJpaEntityToMovement(
-                    movementJpaDao.update(MovementMapper.fromMovementToMovementJpaEntity(movement))
+                      movementJpaDao.update(MovementMapper.fromMovementToMovementJpaEntity(movement))
             );
         }
     }

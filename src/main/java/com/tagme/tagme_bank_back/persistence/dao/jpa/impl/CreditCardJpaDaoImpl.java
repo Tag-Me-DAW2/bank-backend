@@ -71,22 +71,6 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
     }
 
     @Override
-    public String getIbanByCreditCard(CreditCardJpaEntity creditCard) {
-        String sql = "SELECT c.bankAccount.iban FROM CreditCardJpaEntity c " +
-                "WHERE c.number = :number " +
-                "AND c.fullName = :fullName " +
-                "AND c.expirationDate = :expirationDate " +
-                "AND c.cvv = :cvv ";
-
-        return entityManager.createQuery(sql, String.class)
-                .setParameter("number", creditCard.getNumber())
-                .setParameter("fullName", creditCard.getFullName())
-                .setParameter("expirationDate", creditCard.getExpirationDate())
-                .setParameter("cvv", creditCard.getCvv())
-                .getSingleResult();
-    }
-
-    @Override
     public Optional<Long> getIdByCreditCardNumber(String cardNumber) {
         String sql = "SELECT c.id FROM CreditCardJpaEntity c " +
                 "WHERE c.number = :number ";

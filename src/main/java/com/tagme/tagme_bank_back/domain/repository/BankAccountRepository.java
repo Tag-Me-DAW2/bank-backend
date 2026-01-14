@@ -11,6 +11,7 @@ public interface BankAccountRepository {
     Optional<BankAccount> findByIban(String iban);
     Boolean existsByIbanAndClientUsername(String iban, String username);
     List<BankAccount> findByClientId(Long clientId);
-    BigDecimal getBalanceByIban(String iban);
+    Optional<BigDecimal> findBalanceByIban(String iban);
     BankAccount save(BankAccount bankAccount);
+    Optional<String> findIbanByCreditCardNumber(String creditCardNumber);
 }

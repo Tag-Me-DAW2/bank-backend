@@ -35,7 +35,8 @@ public class CreditCardJpaEntity implements Serializable {
     public CreditCardJpaEntity() {
     }
 
-    public CreditCardJpaEntity(String number, String expirationDate, String cvv, String fullName) {
+    public CreditCardJpaEntity(Long id,String number, String expirationDate, String cvv, String fullName) {
+        this.id = id;
         this.number = number;
         this.expirationDate = expirationDate;
         this.cvv = cvv;
