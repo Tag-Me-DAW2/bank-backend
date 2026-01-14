@@ -1,5 +1,7 @@
 package com.tagme.tagme_bank_back.domain.service;
 
+import java.time.LocalDate;
+
 import com.tagme.tagme_bank_back.domain.model.Movement;
 import com.tagme.tagme_bank_back.domain.model.Page;
 
@@ -8,4 +10,5 @@ public interface MovementService {
     Movement getById(Long id);
     Movement create(Movement movement, Long accountId);
     Page<Movement> getAllByAccountId(Long accountId, int page, int size);
+    Page<Movement> getMonthlyMovements(Long accountId, LocalDate date, int page, int size);
 }

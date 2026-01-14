@@ -79,5 +79,5 @@ public class CreditCard {
     @Override
     public int hashCode() {
         return Objects.hash(id, number, expirationDate, cvv, fullName);
-    }   
+    }
 }

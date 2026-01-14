@@ -40,4 +40,12 @@ public class AuthServiceImpl implements AuthService {
 
         authRepository.logout(token);
     }
+
+    @Override
+    public Boolean authorize(String username, String token) {
+        if (!authRepository.isAuthorized(username, token)) {
+            throw new InvalidCredentialsException("Unauthorized access for username: " + username);
+        }
+        return true;
+    }
 }

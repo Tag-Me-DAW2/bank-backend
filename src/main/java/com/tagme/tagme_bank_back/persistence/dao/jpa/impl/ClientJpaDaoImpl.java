@@ -14,13 +14,13 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
     private EntityManager entityManager;
 
     @Override
-    public Optional<Boolean> existsByUsernameAndApiToken(String username, String apiKey) {
+    public Boolean existsByUsernameAndApiToken(String username, String apiKey) {
         String query = "SELECT COUNT(c) FROM ClientJpaEntity c WHERE c.username = :username AND c.apiKey = :apiKey";
         Long count = entityManager.createQuery(query, Long.class)
                 .setParameter("username", username)
                 .setParameter("apiKey", apiKey)
                 .getSingleResult();
-        return Optional.of(count > 0);
+        return count > 0;
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.tagme.tagme_bank_back.domain.service.impl.*;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.*;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.*;
 import com.tagme.tagme_bank_back.persistence.repository.*;
+import com.tagme.tagme_bank_back.usecase.CreditCardPaymentUseCase;
+import com.tagme.tagme_bank_back.usecase.impl.CreditCardPaymentUseCaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,8 +35,8 @@ public class SpringConfig {
     }
 
     @Bean
-    AuthRepository authRepository(AuthJpaDao authJpaDao) {
-        return new AuthRepositoryImpl(authJpaDao);
+    AuthRepository authRepository(AuthJpaDao authJpaDao, ClientJpaDao clientJpaDao) {
+        return new AuthRepositoryImpl(authJpaDao, clientJpaDao);
     }
 
     @Bean
@@ -86,6 +88,12 @@ public class SpringConfig {
     @Bean
     BankAccountService bankAccountService(BankAccountRepository bankAccountRepository) {
         return new BankAccountServiceImpl(bankAccountRepository);
+    }
+
+    // Payment Beans
+    @Bean
+    CreditCardPaymentUseCase creditCardPaymentUseCase(AuthService authService, BankAccountService bankAccountService, CreditCardService creditCardService) {
+        return new CreditCardPaymentUseCaseImpl(authService, bankAccountService, creditCardService);
     }
 
 }

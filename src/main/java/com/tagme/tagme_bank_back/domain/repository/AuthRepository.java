@@ -7,4 +7,5 @@ import java.util.Map;
 public interface AuthRepository {
     Map<Client, String> login(Client client);
     void logout(String token);
+    Boolean isAuthorized(String username, String token);
 }

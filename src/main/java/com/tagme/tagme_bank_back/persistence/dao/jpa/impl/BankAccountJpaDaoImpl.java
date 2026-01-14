@@ -6,6 +6,7 @@ import com.tagme.tagme_bank_back.persistence.dao.jpa.entity.MovementJpaEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,14 +77,19 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
         return Optional.ofNullable(entityManager.find(BankAccountJpaEntity.class, id));
     }
 
+    @Override
+    public BankAccountJpaEntity insert(BankAccountJpaEntity bankAccountJpaEntity) {
+        entityManager.persist(bankAccountJpaEntity);
+        return bankAccountJpaEntity;
+    }
 
     @Override
     public BankAccountJpaEntity update(BankAccountJpaEntity entity) {
-        BankAccountJpaEntity managed = entityManager.find(BankAccountJpaEntity.class, entity.getId());
-        if (managed != null) {
-            managed.setBalance(entity.getBalance());
+        BankAccountJpaEntity managedEntity = entityManager.find(BankAccountJpaEntity.class, entity.getId());
+        if (managedEntity == null) {
+            throw new IllegalArgumentException("Bank account with ID " + entity.getId() + " does not exist.");
         }
-        return managed;
+        return entityManager.merge(entity);
     }
 
     @Override
@@ -91,6 +97,40 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
         BankAccountJpaEntity entity = entityManager.find(BankAccountJpaEntity.class, id);
         if (entity != null) {
             entityManager.remove(entity);
+        }
+    }
+
+    @Override
+    public Optional<BigDecimal> findBalanceByIban(String iban) {
+        try {
+            BigDecimal balance = entityManager.createQuery("""
+                SELECT b.balance
+                FROM BankAccountJpaEntity b
+                WHERE b.iban = :iban
+                """, BigDecimal.class)
+                    .setParameter("iban", iban)
+                    .getSingleResult();
+            return Optional.ofNullable(balance);
+        }
+        catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<String> findIbanByCreditCardNumber(String creditCardNumber) {
+        try {
+            String iban = entityManager.createQuery("""
+                SELECT b.iban
+                FROM BankAccountJpaEntity b
+                JOIN b.creditCards c
+                WHERE c.number = :creditCardNumber
+                """, String.class)
+                    .setParameter("creditCardNumber", creditCardNumber)
+                    .getSingleResult();
+            return Optional.ofNullable(iban);
+        } catch (Exception e) {
+            return Optional.empty();
         }
     }
 }
