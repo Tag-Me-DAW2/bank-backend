@@ -8,4 +8,5 @@ public interface AuthService {
     Map<Client,String> authenticate(String username, String password);
     Boolean authorize(String username, String token);
     void logout(String token);
+    Boolean isApiKeyValid(String apiKey);
 }

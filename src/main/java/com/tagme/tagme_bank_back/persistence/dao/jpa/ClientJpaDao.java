@@ -9,4 +9,5 @@ public interface ClientJpaDao extends GenericJpaDao<ClientJpaEntity> {
     Boolean existsByUsernameAndApiToken(String username, String apiKey);
     Optional<Client> findByUsername(String username);
     ClientJpaEntity insert(ClientJpaEntity clientJpaEntity);
+    Boolean apiKeyExists(String apiKey);
 }

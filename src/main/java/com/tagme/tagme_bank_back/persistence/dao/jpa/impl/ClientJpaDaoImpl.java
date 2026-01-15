@@ -78,4 +78,13 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
             entityManager.remove(entity);
         }
     }
+
+    @Override
+    public Boolean apiKeyExists(String apiKey) {
+        String query = "SELECT COUNT(c) FROM ClientJpaEntity c WHERE c.apiKey = :apiKey";
+        Long count = entityManager.createQuery(query, Long.class)
+                .setParameter("apiKey", apiKey)
+                .getSingleResult();
+        return count > 0;
+    }
 }

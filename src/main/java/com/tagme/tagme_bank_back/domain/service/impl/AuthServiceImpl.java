@@ -48,4 +48,17 @@ public class AuthServiceImpl implements AuthService {
         }
         return true;
     }
+
+    @Override
+    public Boolean isApiKeyValid(String apiKey) {
+        if (apiKey == null || apiKey.isBlank()) {
+            throw new RuntimeException("API key inválida");
+        }
+
+        if (!authRepository.isApiKeyValid(apiKey)) {
+            throw new InvalidCredentialsException("Invalid API key");
+        } else {
+            return true;
+        }
+    }
 }

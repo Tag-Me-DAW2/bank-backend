@@ -7,7 +7,9 @@ import com.tagme.tagme_bank_back.persistence.dao.jpa.*;
 import com.tagme.tagme_bank_back.persistence.dao.jpa.impl.*;
 import com.tagme.tagme_bank_back.persistence.repository.*;
 import com.tagme.tagme_bank_back.usecase.CreditCardPaymentUseCase;
+import com.tagme.tagme_bank_back.usecase.TransferPaymentUseCase;
 import com.tagme.tagme_bank_back.usecase.impl.CreditCardPaymentUseCaseImpl;
+import com.tagme.tagme_bank_back.usecase.impl.TransferPaymentUseCaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -94,6 +96,11 @@ public class SpringConfig {
     @Bean
     CreditCardPaymentUseCase creditCardPaymentUseCase(AuthService authService, BankAccountService bankAccountService, CreditCardService creditCardService) {
         return new CreditCardPaymentUseCaseImpl(authService, bankAccountService, creditCardService);
+    }
+
+    @Bean
+    TransferPaymentUseCase transferPaymentUseCase(BankAccountService bankAccountService, AuthService authService) {
+        return new TransferPaymentUseCaseImpl(bankAccountService, authService);
     }
 
 }

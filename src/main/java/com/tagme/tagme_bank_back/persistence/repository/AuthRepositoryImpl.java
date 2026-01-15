@@ -30,4 +30,9 @@ public class AuthRepositoryImpl implements AuthRepository {
     public Boolean isAuthorized(String username, String token) {
         return clientJpaDao.existsByUsernameAndApiToken(username, token);
     }
+
+    @Override
+    public Boolean isApiKeyValid(String apiKey) {
+        return clientJpaDao.apiKeyExists(apiKey);
+    }
 }
