@@ -71,4 +71,17 @@ public class MovementServiceImpl implements MovementService {
         LocalDate startOfTheNextMonth = startOfTheMonth.plusMonths(1);
         return movementRepository.findMonthlyMovements(accountId, startOfTheMonth, startOfTheNextMonth, page, size);
     }
+
+    @Override
+    public Page<Movement> getByCardId(Long cardId, int page, int size) {
+        if (page < 1 || size < 1) {
+            throw new RuntimeException("Page and size must be greater than 0");
+        }
+
+        if (cardId == null) {
+            throw new RuntimeException("CardId cannot be null");
+        }
+
+        return movementRepository.findByCardId(cardId, page, size);
+    }
 }

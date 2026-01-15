@@ -63,4 +63,14 @@ public class MovementRepositoryImpl implements MovementRepository {
         long totalElements = movementJpaDao.count();
         return new Page<>(content, page, size, totalElements);
     }
+
+    @Override
+    public Page<Movement> findByCardId(Long cardId, int page, int size) {
+        List<Movement> content = movementJpaDao.findByCardId(cardId, page, size).stream()
+                .map(MovementMapper::fromMovementJpaEntityToMovement)
+                .toList();
+
+        long totalElements = movementJpaDao.count();
+        return new Page<>(content, page, size, totalElements);
+    }
 }

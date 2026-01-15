@@ -10,4 +10,5 @@ public interface MovementJpaDao extends GenericJpaDao<MovementJpaEntity> {
     List<MovementJpaEntity> findAllByAccountId(Long bankAccountId, int page, int size);
     List<MovementJpaEntity> findMonthlyMovements(Long bankAccountId, LocalDate startOfTheMonth, LocalDate startOfTheNextMonth, int page, int size);
     MovementJpaEntity insert(MovementJpaEntity movementJpaEntity, Long bankAccountId);
+    List<MovementJpaEntity> findByCardId(Long cardId, int page, int size);
 }

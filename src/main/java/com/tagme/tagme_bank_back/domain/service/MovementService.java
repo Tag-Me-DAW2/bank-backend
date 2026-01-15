@@ -11,4 +11,5 @@ public interface MovementService {
     Movement create(Movement movement, Long accountId);
     Page<Movement> getAllByAccountId(Long accountId, int page, int size);
     Page<Movement> getMonthlyMovements(Long accountId, LocalDate date, int page, int size);
+    Page<Movement> getByCardId(Long cardId, int page, int size);
 }

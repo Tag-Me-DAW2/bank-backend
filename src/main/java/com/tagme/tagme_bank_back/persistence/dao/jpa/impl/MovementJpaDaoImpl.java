@@ -101,4 +101,18 @@ public class MovementJpaDaoImpl implements MovementJpaDao {
 
         return query.getResultList();
     }
+
+    @Override
+    public List<MovementJpaEntity> findByCardId(Long cardId, int page, int size) {
+        int pageIndex = Math.max(page - 1, 0);
+
+        String sql = "SELECT m FROM MovementJpaEntity m WHERE m.originCreditCard.id = :cardId ORDER BY m.id";
+        TypedQuery<MovementJpaEntity> query = entityManager
+                .createQuery(sql, MovementJpaEntity.class)
+                .setParameter("cardId", cardId)
+                .setFirstResult(pageIndex * size)
+                .setMaxResults(size);
+
+        return query.getResultList();
+    }
 }
