@@ -86,6 +86,20 @@ public class BankAccount {
         this.balance = this.balance.subtract(amount);
     }
 
+    public void withdrawByTransfer(BigDecimal amount, String concept) {
+        Movement movement = new Movement(
+                null,
+                MovementType.WITHDRAWAL,
+                MovementOrigin.TRANSFER,
+                null,
+                LocalDate.now(),
+                amount,
+                concept
+        );
+
+        this.movements.add(movement);
+        this.balance = this.balance.subtract(amount);
+    }
     public void deposit(BigDecimal amount, MovementOrigin origin, String concept) {
         Movement movement = new Movement(
                 null,

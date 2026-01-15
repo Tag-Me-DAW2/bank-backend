@@ -15,5 +15,6 @@ public interface BankAccountService {
     BigDecimal getBalanceByIban(String iban);
     String getIbanByCreditCardNumber(String creditCardNumber);
     void withdrawByCard(BankAccount account, BigDecimal amount, CreditCard creditCard, String concept);
+    void withdrawByTransfer(BankAccount account, BigDecimal amount, String concept);
     void deposit(BankAccount account, BigDecimal amount, MovementOrigin movementOrigin, String concept);
  }

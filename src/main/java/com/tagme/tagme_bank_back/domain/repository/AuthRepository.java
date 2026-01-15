@@ -8,4 +8,5 @@ public interface AuthRepository {
     Map<Client, String> login(Client client);
     void logout(String token);
     Boolean isAuthorized(String username, String token);
+    Boolean isApiKeyValid(String apiKey);
 }

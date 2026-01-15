@@ -89,6 +89,13 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     @Transactional
+    public void withdrawByTransfer(BankAccount account, BigDecimal amount, String concept) {
+        account.withdrawByTransfer(amount, concept);
+        bankAccountRepository.save(account);
+    }
+
+    @Override
+    @Transactional
     public void deposit(BankAccount account, BigDecimal amount, MovementOrigin movementOrigin, String concept) {
         account.deposit(amount, movementOrigin, concept);
         bankAccountRepository.save(account);
