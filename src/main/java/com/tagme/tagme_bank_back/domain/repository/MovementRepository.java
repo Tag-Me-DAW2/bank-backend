@@ -12,4 +12,5 @@ public interface MovementRepository {
     Page<Movement> findMonthlyMovements(Long accountId, LocalDate startOfTheMonth, LocalDate startOfTheNextMonth, int page, int size);
     Optional<Movement> findById(Long id);
     Movement save(Movement movement, Long accountId);
+    Page<Movement> findByCardId(Long cardId, int page, int size);
 }

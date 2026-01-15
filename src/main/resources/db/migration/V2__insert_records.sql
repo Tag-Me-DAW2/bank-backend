@@ -15,12 +15,12 @@ VALUES (1, 'gurt'),
 INSERT INTO tb_bank_accounts (client_id, iban, balance)
 VALUES
     -- Javier
-    (1, 'ES1122334455667788990011', 2500.00),
+    (1, 'ES9121000418450200051332', 2500.00),
     -- Pepe
-    (2, 'ES2233445566778899001122', 1800.00),
-    (2, 'ES3344556677889900112233', 750.00),
+    (2, 'ES7620770024003102575766', 1800.00),
+    (2, 'ES9820385778983000760236', 750.00),
     -- Luis
-    (3, 'ES4455667788990011223344', 3200.00);
+    (3, 'ES7921000813610123456789', 3200.00);
 
 
 INSERT INTO tb_credit_cards (account_id, number, expiration_date, cvv, full_name)
