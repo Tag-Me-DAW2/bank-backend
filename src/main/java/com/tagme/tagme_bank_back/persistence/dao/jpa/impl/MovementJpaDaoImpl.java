@@ -35,7 +35,7 @@ public class MovementJpaDaoImpl implements MovementJpaDao {
     public List<MovementJpaEntity> findAllByAccountId(Long bankAccountId, int page, int size) {
         int pageIndex = Math.max(page - 1, 0);
 
-        String sql = "SELECT m FROM MovementJpaEntity m WHERE m.bankAccount.id = :bankAccountId ORDER BY m.id";
+        String sql = "SELECT m FROM MovementJpaEntity m WHERE m.bankAccount.id = :bankAccountId ORDER BY m.date DESC, m.id DESC";
         TypedQuery<MovementJpaEntity> query = entityManager
                 .createQuery(sql, MovementJpaEntity.class)
                 .setParameter("bankAccountId", bankAccountId)
