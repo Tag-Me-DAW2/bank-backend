@@ -7,6 +7,7 @@ import com.tagme.tagme_bank_back.domain.model.MovementOrigin;
 import com.tagme.tagme_bank_back.domain.service.AuthService;
 import com.tagme.tagme_bank_back.domain.service.BankAccountService;
 import com.tagme.tagme_bank_back.usecase.TransferPaymentUseCase;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -20,6 +21,7 @@ public class TransferPaymentUseCaseImpl implements TransferPaymentUseCase {
     }
 
     @Override
+    @Transactional
     public void execute(TransferPaymentDto transferPaymentDto) {
         String username = transferPaymentDto.authDto().username();
         String apiKey = transferPaymentDto.authDto().apiKey();
