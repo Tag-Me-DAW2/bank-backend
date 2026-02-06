@@ -25,7 +25,7 @@ public class RoutesWithoutTokenFilter implements Filter {
         );
 
         if (allowedPaths.contains(path)) {
-            request.getRequestDispatcher("/auth/login").forward(request, response);
+            request.getRequestDispatcher(path).forward(request, response);
             return;
         }
 
