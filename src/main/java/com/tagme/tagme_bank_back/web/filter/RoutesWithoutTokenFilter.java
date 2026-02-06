@@ -7,10 +7,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @Order(1)
-public class LoginFilter implements Filter {
+public class RoutesWithoutTokenFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -18,7 +19,12 @@ public class LoginFilter implements Filter {
 
         String path = httpServletRequest.getRequestURI();
 
-        if (path.equals("/auth/login")) {
+        List<String> allowedPaths = List.of(
+                "/auth/login",
+                "/payments/credit-card"
+        );
+
+        if (allowedPaths.contains(path)) {
             request.getRequestDispatcher("/auth/login").forward(request, response);
             return;
         }
