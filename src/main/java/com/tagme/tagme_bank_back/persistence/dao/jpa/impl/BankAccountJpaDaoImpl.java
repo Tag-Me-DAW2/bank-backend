@@ -16,6 +16,8 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
 
     @Override
     public Optional<BankAccountJpaEntity> findByIban(String iban) {
+        System.out.println("dao: "+iban);
+
         String query = "SELECT b FROM BankAccountJpaEntity b WHERE b.iban = :iban";
         try {
             BankAccountJpaEntity bankAccountJpaEntity = entityManager.createQuery(query, BankAccountJpaEntity.class)

@@ -35,6 +35,7 @@ public class PaymentController {
         DtoValidator.validate(request);
 
         CreditCardPaymentDto paymentDto = PaymentMapper.fromCreditCardPaymentRequest(request);
+        System.out.println(request);
 
         creditCardPaymentUseCase.execute(paymentDto);
 
