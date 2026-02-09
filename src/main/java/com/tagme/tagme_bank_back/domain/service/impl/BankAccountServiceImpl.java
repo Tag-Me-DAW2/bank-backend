@@ -32,7 +32,6 @@ public class BankAccountServiceImpl implements BankAccountService {
         if (iban == null || iban.isBlank()) {
             throw new RuntimeException("IBAN cannot be null or blank");
         }
-
         return bankAccountRepository.findByIban(normalizeIban(iban)).orElseThrow(() -> new NotFoundException("Bank account not found"));
     }
 
