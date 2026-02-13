@@ -60,7 +60,7 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
             SELECT m
             FROM MovementJpaEntity m
             WHERE m.bankAccount.id = :accountId
-            ORDER BY m.date DESC
+            ORDER BY m.date DESC, m.id DESC
             """, MovementJpaEntity.class)
                         .setParameter("accountId", account.getId())
                         .setMaxResults(4)
