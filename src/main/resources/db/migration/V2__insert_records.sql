@@ -5,7 +5,7 @@ VALUES ('javier',
        ('pepe',
         '$argon2id$v=19$m=15360,t=2,p=1$IWkQZkJkfAWYmn4hvwAQUe61Z3C6+9PzHr5Uu9Qf2VqPHFu480qXQE9fyUhxGXEWrI8qNbchVbBi8D9XErCt8A$XjJrwUROra2ZyuYg5RLgVmTs1FpnvdtKcn6iD+5HyFw',
         'Javier', 'Lopez', 'Gomez', '45904029K', 'gurt'),
-       ('luis', '$argon2id$v=19$m=15360,t=2,p=1$EXAMPLEHASHLUIS', 'Luis', 'Martinez', 'Lopez', '87654321B', 'luis456'),
+       ('luis', '$argon2id$v=19$m=15360,t=2,p=1$IWkQZkJkfAWYmn4hvwAQUe61Z3C6+9PzHr5Uu9Qf2VqPHFu480qXQE9fyUhxGXEWrI8qNbchVbBi8D9XErCt8A$XjJrwUROra2ZyuYg5RLgVmTs1FpnvdtKcn6iD+5HyFw', 'Luis', 'Martinez', 'Lopez', '87654321B', 'luis456'),
        ('TagMe',
         '$argon2id$v=19$m=15360,t=2,p=1$IWkQZkJkfAWYmn4hvwAQUe61Z3C6+9PzHr5Uu9Qf2VqPHFu480qXQE9fyUhxGXEWrI8qNbchVbBi8D9XErCt8A$XjJrwUROra2ZyuYg5RLgVmTs1FpnvdtKcn6iD+5HyFw',
         'TagMe', 'Store', '', '45904090K', 'gurt_el_cartomago');
