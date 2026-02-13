@@ -59,7 +59,7 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
     public ClientJpaEntity update(ClientJpaEntity entity) {
         ClientJpaEntity managed = entityManager.find(ClientJpaEntity.class, entity.getId());
         if (managed == null) {
-            throw new IllegalArgumentException("Client with id " + entity.getId() + " does not exist.");
+            throw new IllegalArgumentException("El cliente con id " + entity.getId() + " no existe.");
         }
 
         managed.setUsername(entity.getUsername());

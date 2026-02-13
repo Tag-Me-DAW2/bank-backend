@@ -22,21 +22,21 @@ public record Page<T>(
 
     private static <T> List<T> validateDataSize(List<T> data, int pageSize) {
         if (data.size() > pageSize) {
-            throw new RuntimeException("Data size cannot be greater than page size");
+            throw new RuntimeException("El tamaño de los datos no puede ser mayor que el tamaño de la página");
         }
         return data;
     }
 
     private static int validatePageNumber(int pageNumber) {
         if (pageNumber < 1) {
-            throw new RuntimeException("Page number cannot be less than one");
+            throw new RuntimeException("El número de página no puede ser menor que uno");
         }
         return pageNumber;
     }
 
     private static int validatePageSize(int pageSize) {
         if (pageSize <= 0) {
-            throw new RuntimeException("Page size must be greater than zero");
+            throw new RuntimeException("El tamaño de la página debe ser mayor que cero");
         }
         return pageSize;
     }

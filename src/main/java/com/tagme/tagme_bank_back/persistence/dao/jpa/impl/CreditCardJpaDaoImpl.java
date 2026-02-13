@@ -46,7 +46,7 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
     public CreditCardJpaEntity insert(CreditCardJpaEntity entity, Long bankAccountId) {
         BankAccountJpaEntity bankAccount = entityManager.find(BankAccountJpaEntity.class, bankAccountId);
         if (bankAccount == null) {
-            throw new NotFoundException("BankAccount with ID " + bankAccountId + " does not exist.");
+            throw new NotFoundException("La cuenta bancaria con ID " + bankAccountId + " no existe.");
         }
         entity.setBankAccount(bankAccount);
         entityManager.persist(entity);
@@ -56,7 +56,7 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
     @Override
     public CreditCardJpaEntity update(CreditCardJpaEntity entity) {
         if (entityManager.find(CreditCardJpaEntity.class, entity.getId()) == null) {
-            throw new NotFoundException("CreditCard with ID " + entity.getId() + " does not exist.");
+            throw new NotFoundException("La tarjeta de crédito con ID " + entity.getId() + " no existe.");
         } else {
             return entityManager.merge(entity);
         }

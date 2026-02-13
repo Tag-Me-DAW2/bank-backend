@@ -69,7 +69,7 @@ public class Movement {
 
     public void setAmount(BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Amount must be greater than 0");
+            throw new IllegalArgumentException("El monto debe ser mayor que 0");
         }
         this.amount = amount;
     }

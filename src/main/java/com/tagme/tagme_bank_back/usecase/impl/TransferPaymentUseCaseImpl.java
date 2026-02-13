@@ -37,7 +37,7 @@ public class TransferPaymentUseCaseImpl implements TransferPaymentUseCase {
 
         // Comprobar Iban
         if (ibanOrigin.equals(ibanDestination)) {
-            throw new IllegalArgumentException("The origin and destination accounts cannot be the same");
+            throw new IllegalArgumentException("Las cuentas de origen y destino no pueden ser las mismas");
         }
 
         bankAccountService.checkOwner(ibanOrigin, username);
@@ -56,7 +56,7 @@ public class TransferPaymentUseCaseImpl implements TransferPaymentUseCase {
 
     private void checkAvaliableBalance(BigDecimal clientBalance, BigDecimal paymentAmount) {
         if (clientBalance.subtract(paymentAmount).compareTo(BigDecimal.ZERO) < 0) {
-            throw new InsufficientBalanceException("Insufficient balance");
+            throw new InsufficientBalanceException("Saldo insuficiente");
         }
 
     }

@@ -61,7 +61,7 @@ public class MovementJpaDaoImpl implements MovementJpaDao {
     public MovementJpaEntity insert(MovementJpaEntity entity, Long bankAccountId) {
         BankAccountJpaEntity bankAccountJpaEntity = entityManager.find(BankAccountJpaEntity.class, bankAccountId);
         if (bankAccountJpaEntity == null) {
-            throw new NotFoundException("Bank account with ID " + bankAccountId + " does not exist.");
+            throw new NotFoundException("La cuenta bancaria con ID " + bankAccountId + " no existe.");
         }
         entity.setBankAccount(bankAccountJpaEntity);
         entityManager.persist(entity);
@@ -72,7 +72,7 @@ public class MovementJpaDaoImpl implements MovementJpaDao {
     public MovementJpaEntity update(MovementJpaEntity entity) {
         MovementJpaEntity managedEntity = entityManager.find(MovementJpaEntity.class, entity.getId());
         if (managedEntity == null) {
-            throw new IllegalArgumentException("Movement with ID " + entity.getId() + " does not exist.");
+            throw new IllegalArgumentException("El movimiento con ID " + entity.getId() + " no existe.");
         }
         return entityManager.merge(entity);
     }

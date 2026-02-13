@@ -19,7 +19,7 @@ public class AuthFilter implements Filter {
 
         String authHeader = httpRequest.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No autorizado");
             return;
         }
 
@@ -27,7 +27,7 @@ public class AuthFilter implements Filter {
         if (JwtUtil.validateToken(token)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No autorizado");
         }
     }
 }

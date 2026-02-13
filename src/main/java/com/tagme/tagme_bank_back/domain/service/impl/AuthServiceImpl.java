@@ -23,10 +23,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public Map<Client, String> authenticate(String username, String password) {
-        Client client = clientRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Client not found with username: " + username));
+        Client client = clientRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Cliente no encontrado con nombre de usuario: " + username));
 
         boolean isPasswordValid = Password4jUtil.verifyPassword(password, client.getPassword());
-        if(!isPasswordValid) throw new InvalidCredentialsException("Invalid password for username: " + username);
+        if(!isPasswordValid) throw new InvalidCredentialsException("Contraseña inválida para el usuario: " + username);
 
         return authRepository.login(client);
     }
@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Boolean authorize(String username, String token) {
         if (!authRepository.isAuthorized(username, token)) {
-            throw new InvalidCredentialsException("Unauthorized access for username: " + username);
+            throw new InvalidCredentialsException("Acceso no autorizado para el usuario: " + username);
         }
         return true;
     }
@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         if (!authRepository.isApiKeyValid(apiKey)) {
-            throw new InvalidCredentialsException("Invalid API key");
+            throw new InvalidCredentialsException("Clave API inválida");
         } else {
             return true;
         }

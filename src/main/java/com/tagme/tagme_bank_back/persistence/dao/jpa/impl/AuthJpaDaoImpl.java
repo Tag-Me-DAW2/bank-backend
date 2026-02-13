@@ -20,7 +20,7 @@ public class AuthJpaDaoImpl implements AuthJpaDao {
     public Map<Client, String> login(Client client) {
         ClientJpaEntity clientJpaEntity = entityManager.find(ClientJpaEntity.class, client.getId());
         if (clientJpaEntity == null) {
-            throw new NotFoundException("Client not found");
+            throw new NotFoundException("Cliente no encontrado");
         }
 
         // Borrar sesiones antiguas
