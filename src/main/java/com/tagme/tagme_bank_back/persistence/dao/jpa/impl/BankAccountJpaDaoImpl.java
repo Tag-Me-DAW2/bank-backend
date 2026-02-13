@@ -89,7 +89,7 @@ public class BankAccountJpaDaoImpl implements BankAccountJpaDao {
     public BankAccountJpaEntity update(BankAccountJpaEntity entity) {
         BankAccountJpaEntity managedEntity = entityManager.find(BankAccountJpaEntity.class, entity.getId());
         if (managedEntity == null) {
-            throw new IllegalArgumentException("Bank account with ID " + entity.getId() + " does not exist.");
+            throw new IllegalArgumentException("La cuenta bancaria con ID " + entity.getId() + " no existe.");
         }
         return entityManager.merge(entity);
     }

@@ -47,7 +47,7 @@ public class CreditCardPaymentUseCaseImpl implements CreditCardPaymentUseCase {
         String ibanClient = bankAccountService.getIbanByCreditCardNumber(creditCardNumber);
 
         if(ibanClient.equals(ibanDestination)){
-            throw new IllegalArgumentException("The origin and destination accounts cannot be the same");
+            throw new IllegalArgumentException("Las cuentas de origen y destino no pueden ser las mismas");
         }
 
         // Recoger saldo del Cliente
@@ -68,7 +68,7 @@ public class CreditCardPaymentUseCaseImpl implements CreditCardPaymentUseCase {
 
     private void checkAvaliableBalance(BigDecimal clientBalance, BigDecimal paymentAmount) {
         if (clientBalance.subtract(paymentAmount).compareTo(BigDecimal.ZERO) < 0) {
-            throw new InsufficientBalanceException("Insufficient balance");
+            throw new InsufficientBalanceException("Saldo insuficiente");
         }
 
     }

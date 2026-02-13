@@ -21,31 +21,31 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BankAccount getById(Long id) {
         if (id == null) {
-            throw new RuntimeException("Bank account ID cannot be null");
+            throw new RuntimeException("El ID de la cuenta bancaria no puede ser nulo");
         }
 
-        return bankAccountRepository.findById(id).orElseThrow(() -> new NotFoundException("Bank account not found"));
+        return bankAccountRepository.findById(id).orElseThrow(() -> new NotFoundException("Cuenta bancaria no encontrada"));
     }
 
     @Override
     public BankAccount getByIban(String iban) {
         if (iban == null || iban.isBlank()) {
-            throw new RuntimeException("IBAN cannot be null or blank");
+            throw new RuntimeException("El IBAN no puede ser nulo o vacío");
         }
-        return bankAccountRepository.findByIban(normalizeIban(iban)).orElseThrow(() -> new NotFoundException("Bank account not found"));
+        return bankAccountRepository.findByIban(normalizeIban(iban)).orElseThrow(() -> new NotFoundException("Cuenta bancaria no encontrada"));
     }
 
     @Override
     public Boolean checkOwner(String iban, String username) {
         if (iban == null || iban.isBlank()) {
-            throw new RuntimeException("IBAN cannot be null or blank");
+            throw new RuntimeException("El IBAN no puede ser nulo o vacío");
         }
         if (username == null || username.isBlank()) {
-            throw new RuntimeException("Username cannot be null or blank");
+            throw new RuntimeException("El nombre de usuario no puede ser nulo o vacío");
         }
 
         if(!bankAccountRepository.existsByIbanAndClientUsername(iban, username)) {
-            throw new NotFoundException("Bank account not found for the given IBAN and username");
+            throw new NotFoundException("Cuenta bancaria no encontrada para el IBAN y usuario especificados");
         }
 
         return true;
@@ -54,7 +54,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public List<BankAccount> getByClientId(Long clientId) {
         if (clientId == null) {
-            throw new RuntimeException("Client ID cannot be null");
+            throw new RuntimeException("El ID del cliente no puede ser nulo");
         }
 
         return bankAccountRepository.findByClientId(clientId);
@@ -63,20 +63,20 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BigDecimal getBalanceByIban(String iban) {
         if (iban == null || iban.isBlank()) {
-            throw new RuntimeException("IBAN cannot be null or blank");
+            throw new RuntimeException("El IBAN no puede ser nulo o vacío");
         }
 
-        return bankAccountRepository.findBalanceByIban(iban).orElseThrow(() -> new NotFoundException("Bank account not found"));
+        return bankAccountRepository.findBalanceByIban(iban).orElseThrow(() -> new NotFoundException("Cuenta bancaria no encontrada"));
     }
 
     @Override
     public String getIbanByCreditCardNumber(String creditCardNumber) {
         if (creditCardNumber == null || creditCardNumber.isBlank()) {
-            throw new RuntimeException("Credit card number cannot be null or blank");
+            throw new RuntimeException("El número de tarjeta de crédito no puede ser nulo o vacío");
         }
 
         return bankAccountRepository.findIbanByCreditCardNumber(creditCardNumber)
-                .orElseThrow(() -> new NotFoundException("Bank account not found for the given credit card number"));
+                .orElseThrow(() -> new NotFoundException("Cuenta bancaria no encontrada para el número de tarjeta especificado"));
     }
 
     @Override

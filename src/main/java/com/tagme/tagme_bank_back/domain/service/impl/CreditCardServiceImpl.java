@@ -15,16 +15,16 @@ public class CreditCardServiceImpl implements CreditCardService {
     @Override
     public CreditCard getById(Long id) {
         if(id == null) {
-            throw new RuntimeException("Credit Card id cannot be null");
+            throw new RuntimeException("El ID de la tarjeta de crédito no puede ser nulo");
         }
 
-        return creditCardRepository.findById(id).orElseThrow(() -> new NotFoundException("Credit Card Not Found"));
+        return creditCardRepository.findById(id).orElseThrow(() -> new NotFoundException("Tarjeta de crédito no encontrada"));
     }
 
     @Override
     public Boolean validateCreditCard(CreditCard creditCard) {
         if(!creditCardRepository.validateCreditCard(creditCard)) {
-            throw new NotFoundException("Credit Card Not Found");
+            throw new NotFoundException("Tarjeta de crédito no encontrada");
         }
         return true;
     }
@@ -32,6 +32,6 @@ public class CreditCardServiceImpl implements CreditCardService {
     @Override
     public Long getIdByCreditCardNumber(String cardNumber) {
         return creditCardRepository.getIdByCreditCardNumber(cardNumber)
-                .orElseThrow(() -> new NotFoundException("Credit Card Not Found"));
+                .orElseThrow(() -> new NotFoundException("Tarjeta de crédito no encontrada"));
     }
 }
